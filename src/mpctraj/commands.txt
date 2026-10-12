@@ -1,0 +1,36 @@
+---- to run drone in sim -----
+
+terminal 1:
+source ros2 humble
+cd workspace
+source installation
+export PYTHONPATH=/<parent_folder>/crazyflie-firmware/build:$PYTHONPATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ACADOS_SOURCE_DIR/lib/
+ros2 launch mpctraj launch.py script:=traj_mpc_sim backend:=sim
+
+---- to run drone -----
+
+terminal 1:
+source ros2 humble
+source installation
+ros2 launch crazyflie launch.py backend:=cflib
+
+terminal 2:
+source ros2 humble
+cd workspace
+source installation
+export PYTHONPATH=/<parent_folder>/crazyflie-firmware/build:$PYTHONPATH
+export ACADOS_SOURCE_DIR=/<parent_folder>/acados                       
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ACADOS_SOURCE_DIR/lib
+export PYTHONPATH=$PYTHONPATH:$ACADOS_SOURCE_DIR/interfaces/acados_template
+ros2 run mpctraj traj_mpc
+
+---- to record a rosbag  -----
+
+terminal 3:
+source ros2 humble
+source installation
+cd rosbag folder
+ros2 bag record -o <bag_name> /poses /cf2/velocity_estimate /cf2/desired_pose /cf2/desired_velocity
+
+
