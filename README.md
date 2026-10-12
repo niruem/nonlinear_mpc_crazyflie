@@ -1,7 +1,7 @@
 # mpc_crazyflie
 Code adapted from [here](https://github.com/llanesc/crazyflie_mpc). 
 
-This work uses a Model Predictive Controller on top of crazyflied built in attitude PID.
+This work uses a Model Predictive Controller on top of crazyflied built in attitude PID to achieve accurate trajectory tracking of preplanned trajectories.
 
 It uses a simplified dynamics model that assumes the attitude PID responds like a first order system to desired attitude commands.
 
